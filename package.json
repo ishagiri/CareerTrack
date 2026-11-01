@@ -1,0 +1,10 @@
+
+{
+  "name": "careertrack",
+  "version": "1.0.0",
+  "description": "Placement Application Tracker",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
+}

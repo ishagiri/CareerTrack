@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerTrack — Placement Application Tracker</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <i class="fa-solid fa-compass brand-icon"></i>
+          <div class="brand-text">
+            <span class="brand-name">Career<span class="brand-highlight">Track</span></span>
+            <span class="brand-badge">PRO</span>
+          </div>
+        </div>
+        <button class="btn-icon mobile-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+              <i class="fa-solid fa-table-columns nav-icon"></i>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#applications" class="nav-link" data-section="applications">
+              <i class="fa-solid fa-briefcase nav-icon"></i>
+              <span class="nav-label">My Applications</span>
+              <span class="nav-pill" id="navAppCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#interviews" class="nav-link" data-section="interviews">
+              <i class="fa-solid fa-user-tie nav-icon"></i>
+              <span class="nav-label">Interviews</span>
+              <span class="nav-pill pill-warning" id="navInterviewCount">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#calendar" class="nav-link" data-section="calendar">
+              <i class="fa-solid fa-calendar-days nav-icon"></i>
+              <span class="nav-label">Calendar</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#analytics" class="nav-link" data-section="analytics">
+              <i class="fa-solid fa-chart-pie nav-icon"></i>
+              <span class="nav-label">Analytics</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#settings" class="nav-link" data-section="settings">
+              <i class="fa-solid fa-sliders nav-icon"></i>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer / Quick Stat -->
+      <div class="sidebar-footer">
+        <div class="sidebar-status-card">
+          <div class="sidebar-status-header">
+            <span class="status-indicator live"></span>
+            <span class="sidebar-status-title">Active Placement Cycle</span>
+          </div>
+          <p class="sidebar-status-subtitle" id="sidebarCycleText">2026 Season • Active</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="sidebarProgress" style="width: 65%;"></div>
+          </div>
+          <span class="sidebar-progress-label" id="sidebarProgressLabel">Placement Readiness: 65%</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="page-title-box">
+            <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            <span class="page-subtitle" id="pageSubtitle">Track and manage your recruitment pipeline</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Global Search -->
+          <div class="global-search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="globalSearchInput" class="global-search-input" placeholder="Search company or role...">
+          </div>
+
+          <!-- Dark/Light Theme Toggle -->
+          <button class="btn-icon theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme" title="Switch Theme">
+            <i class="fa-solid fa-sun light-icon"></i>
+            <i class="fa-solid fa-moon dark-icon"></i>
+          </button>
+
+          <!-- Notifications Dropdown Trigger -->
+          <div class="dropdown-wrapper">
+            <button class="btn-icon notification-btn" id="notificationBtn" aria-label="View Notifications" title="Notifications">
+              <i class="fa-solid fa-bell"></i>
+              <span class="notification-badge" id="notificationCount">2</span>
+            </button>
+            
+            <!-- Notification Panel -->
+            <div class="dropdown-menu notification-menu" id="notificationMenu">
+              <div class="dropdown-header">
+                <span class="dropdown-title">Notifications</span>
+                <span class="badge badge-primary" id="notifBadgeCount">2 New</span>
+              </div>
+              <div class="notification-list" id="notificationList">
+                <!-- Dynamically populated or default alerts -->
+                <div class="notification-item unread">
+                  <div class="notif-icon bg-info"><i class="fa-solid fa-calendar-check"></i></div>
+                  <div class="notif-content">
+                    <p class="notif-text"><strong>Google Technical Round</strong> scheduled for tomorrow at 2:00 PM.</p>
+                    <span class="notif-time">1 hour ago</span>
+                  </div>
+                </div>
+                <div class="notification-item unread">
+                  <div class="notif-icon bg-warning"><i class="fa-solid fa-clock"></i></div>
+                  <div class="notif-content">
+                    <p class="notif-text"><strong>Microsoft OA Deadline</strong> approaching in 48 hours.</p>
+                    <span class="notif-time">3 hours ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-footer">
+                <button class="btn-text" id="clearNotifsBtn">Mark all as read</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Profile Dropdown -->
+          <div class="user-profile" id="userProfileBtn">
+            <div class="avatar" id="topAvatar">CT</div>
+            <div class="user-meta">
+              <span class="user-name" id="topUserName">Candidate</span>
+              <span class="user-role" id="topUserRole">Software Candidate</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Main Content Views -->
+      <main class="content-body">
+        
+        <!-- ==================== 1. DASHBOARD SECTION ==================== -->
+        <section id="section-dashboard" class="content-section active">
+          
+          <!-- Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text-group">
+              <div class="greeting-row">
+                <h2 class="welcome-greeting" id="welcomeGreeting">Good afternoon, Candidate!</h2>
+                <span class="welcome-tag"><i class="fa-solid fa-bolt"></i> Ready to Conquer</span>
+              </div>
+              <p class="welcome-quote" id="welcomeQuote">"Every application submitted is a step closer to your dream offer. Stay consistent and keep moving forward!"</p>
+            </div>
+            <div class="welcome-right">
+              <div class="current-date-badge">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="currentDateDisplay">Sunday, Nov 1, 2026</span>
+              </div>
+              <button class="btn btn-primary" id="dashAddAppBtn">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Application</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Key Metrics Statistics Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-total">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Total Applications</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statTotal">0</span>
+                  <span class="stat-badge badge-neutral"><i class="fa-solid fa-chart-simple"></i> All time</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-applied">
+                <i class="fa-solid fa-paper-plane"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Applied</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statApplied">0</span>
+                  <span class="stat-badge badge-info">Submitted</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-assessment">
+                <i class="fa-solid fa-laptop-code"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Assessments</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statAssessment">0</span>
+                  <span class="stat-badge badge-warning">OA Stage</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-interview">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Interviews</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statInterview">0</span>
+                  <span class="stat-badge badge-primary">Active</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-offer">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Offers</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statOffer">0</span>
+                  <span class="stat-badge badge-success">Celebration</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-rejected">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Rejected</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="statRejected">0</span>
+                  <span class="stat-badge badge-danger">Archive</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts & Visual Distribution Row -->
+          <div class="dashboard-grid-two">
+            <!-- Application Activity Chart Card -->
+            <div class="card chart-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Application Activity Over Time</h3>
+                  <p class="card-subtitle">Monthly distribution of submissions</p>
+                </div>
+                <span class="badge badge-outline"><i class="fa-solid fa-wave-square"></i> 2026 Trend</span>
+              </div>
+              <div class="card-body">
+                <div class="chart-container">
+                  <canvas id="activityChartCanvas" height="220"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Application Status Overview Card -->
+            <div class="card chart-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Status Breakdown</h3>
+                  <p class="card-subtitle">Current distribution across pipeline</p>
+                </div>
+                <span class="badge badge-outline"><i class="fa-solid fa-chart-pie"></i> Ratio</span>
+              </div>
+              <div class="card-body status-overview-body">
+                <div class="donut-chart-container">
+                  <canvas id="statusChartCanvas" width="180" height="180"></canvas>
+                </div>
+                <div class="status-legend" id="statusOverviewLegend">
+                  <!-- Dynamically populated legend -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Interviews & Recent Applications Row -->
+          <div class="dashboard-grid-two">
+            <!-- Upcoming Interviews Card -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Upcoming Interviews</h3>
+                  <p class="card-subtitle">Next scheduled interaction rounds</p>
+                </div>
+                <button class="btn-text" id="dashViewAllInterviews">View All <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+              <div class="card-body p-0">
+                <div class="list-group" id="dashUpcomingInterviewsList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Applications Card -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Recent Applications</h3>
+                  <p class="card-subtitle">Latest entries added to tracker</p>
+                </div>
+                <button class="btn-text" id="dashViewAllApps">View All <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+              <div class="card-body p-0">
+                <div class="list-group" id="dashRecentAppsList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ==================== 2. MY APPLICATIONS SECTION ==================== -->
+        <section id="section-applications" class="content-section">
+          
+          <!-- Section Action Toolbar -->
+          <div class="section-toolbar">
+            <div class="toolbar-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="appSearchInput" placeholder="Filter by company or job role..." class="form-control">
+            </div>
+
+            <div class="toolbar-filters">
+              <select id="appStatusFilter" class="form-select">
+                <option value="ALL">All Statuses</option>
+                <option value="Applied">Applied</option>
+                <option value="Assessment">Assessment</option>
+                <option value="Interview">Interview</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+
+              <select id="appTypeFilter" class="form-select">
+                <option value="ALL">All Job Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Part-time">Part-time</option>
+              </select>
+
+              <select id="appSortFilter" class="form-select">
+                <option value="newest">Sort: Newest First</option>
+                <option value="oldest">Sort: Oldest First</option>
+                <option value="company-asc">Company (A-Z)</option>
+                <option value="company-desc">Company (Z-A)</option>
+              </select>
+
+              <button class="btn btn-primary" id="openAddAppModalBtn">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Application</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Application Table View (Desktop) & Cards (Mobile) -->
+          <div class="card app-table-card">
+            <div class="table-responsive">
+              <table class="data-table" id="applicationsTable">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Role & Type</th>
+                    <th>Location</th>
+                    <th>Applied Date</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Link / Notes</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="applicationsTableBody">
+                  <!-- Populated via script.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State Display -->
+            <div class="empty-state" id="appsEmptyState" style="display: none;">
+              <div class="empty-icon"><i class="fa-regular fa-folder-open"></i></div>
+              <h4 class="empty-title">No applications found</h4>
+              <p class="empty-desc">You haven't logged any applications matching the selected criteria. Add your dream companies to begin!</p>
+              <button class="btn btn-primary" id="emptyAddAppBtn">
+                <i class="fa-solid fa-plus"></i> Add First Application
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Cards Container -->
+          <div class="mobile-apps-cards" id="mobileAppsContainer">
+            <!-- Dynamically populated cards for mobile viewports -->
+          </div>
+
+        </section>
+
+
+        <!-- ==================== 3. INTERVIEWS SECTION ==================== -->
+        <section id="section-interviews" class="content-section">
+          
+          <div class="section-toolbar">
+            <div class="filter-tabs" id="interviewTabs">
+              <button class="filter-tab active" data-tab="all">All Interviews</button>
+              <button class="filter-tab" data-tab="upcoming">Upcoming</button>
+              <button class="filter-tab" data-tab="completed">Completed</button>
+            </div>
+
+            <div class="toolbar-actions">
+              <button class="btn btn-primary" id="openAddInterviewModalBtn">
+                <i class="fa-solid fa-plus"></i>
+                <span>Schedule Interview</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Interview Cards Grid -->
+          <div class="interviews-grid" id="interviewsGrid">
+            <!-- Populated via script.js -->
+          </div>
+
+          <!-- Empty State for Interviews -->
+          <div class="empty-state" id="interviewsEmptyState" style="display: none;">
+            <div class="empty-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+            <h4 class="empty-title">No interviews scheduled</h4>
+            <p class="empty-desc">Keep applying! Once companies contact you for technical screenings or HR rounds, log them here to stay prepared.</p>
+            <button class="btn btn-primary" id="emptyAddInterviewBtn">
+              <i class="fa-solid fa-plus"></i> Schedule Interview
+            </button>
+          </div>
+
+        </section>
+
+
+        <!-- ==================== 4. CALENDAR SECTION ==================== -->
+        <section id="section-calendar" class="content-section">
+          
+          <div class="calendar-layout">
+            <!-- Left Side: Interactive Month Grid -->
+            <div class="card calendar-card">
+              <div class="calendar-header">
+                <div class="calendar-nav-group">
+                  <h3 class="calendar-month-title" id="calendarMonthTitle">November 2026</h3>
+                  <div class="calendar-nav-buttons">
+                    <button class="btn-icon" id="calPrevMonth" title="Previous Month"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="btn btn-outline btn-sm" id="calTodayBtn">Today</button>
+                    <button class="btn-icon" id="calNextMonth" title="Next Month"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                </div>
+
+                <div class="calendar-legend">
+                  <span class="legend-item"><span class="legend-dot dot-interview"></span> Interview</span>
+                  <span class="legend-item"><span class="legend-dot dot-assessment"></span> Assessment</span>
+                  <span class="legend-item"><span class="legend-dot dot-deadline"></span> App Deadline</span>
+                </div>
+              </div>
+
+              <!-- Calendar Weekday Header -->
+              <div class="calendar-weekdays">
+                <span>Sun</span>
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+              </div>
+
+              <!-- Calendar Dates Grid -->
+              <div class="calendar-grid" id="calendarGrid">
+                <!-- Dynamically populated dates -->
+              </div>
+            </div>
+
+            <!-- Right Side: Selected Date Agenda / Events Drawer -->
+            <div class="card agenda-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Agenda for Selected Date</h3>
+                  <p class="card-subtitle" id="selectedDateTitle">Click any date to see scheduled activities</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="agenda-list" id="agendaEventsList">
+                  <div class="agenda-empty">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <p>No deadlines or interviews logged on this day.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-outline btn-block" id="calQuickAddInterviewBtn">
+                  <i class="fa-solid fa-plus"></i> Add Event for This Date
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ==================== 5. ANALYTICS SECTION ==================== -->
+        <section id="section-analytics" class="content-section">
+          
+          <!-- Key Analytics Summary Metrics -->
+          <div class="stats-grid analytics-metrics">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-total">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Interview Conversion</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="metricInterviewRate">0%</span>
+                  <span class="stat-badge badge-primary">Pipeline flow</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-offer">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Offer Conversion Rate</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="metricOfferRate">0%</span>
+                  <span class="stat-badge badge-success">Success score</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-applied">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Active Applications</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="metricActiveCount">0</span>
+                  <span class="stat-badge badge-info">In progress</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-rejected">
+                <i class="fa-solid fa-filter"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Rejection Ratio</span>
+                <div class="stat-value-group">
+                  <span class="stat-value" id="metricRejectRate">0%</span>
+                  <span class="stat-badge badge-danger">Normal learning curve</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deep Dive Analytics Breakdown -->
+          <div class="dashboard-grid-two">
+            <!-- Full Status Breakdown Progress Bars -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Status Funnel & Health</h3>
+                  <p class="card-subtitle">Detailed breakdown of applications at each gate</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="funnel-container" id="analyticsFunnelContainer">
+                  <!-- Dynamically populated progress bars -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Most Applied Job Roles -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Top Target Roles</h3>
+                  <p class="card-subtitle">Distribution of roles you have focused on</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="role-distribution-list" id="analyticsRoleList">
+                  <!-- Dynamically populated roles -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Application Velocity by Month Full-Width Chart -->
+          <div class="card mt-4">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Monthly Application Velocity</h3>
+                <p class="card-subtitle">Total applications submitted per calendar month</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container large-chart">
+                <canvas id="monthlyVelocityCanvas" height="260"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ==================== 6. SETTINGS SECTION ==================== -->
+        <section id="section-settings" class="content-section">
+          
+          <div class="settings-container">
+            <!-- Profile Card -->
+            <div class="card settings-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title"><i class="fa-solid fa-user-gear"></i> Profile Information</h3>
+                  <p class="card-subtitle">Personalize your candidate identity on CareerTrack</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <form id="profileSettingsForm">
+                  <div class="form-grid-two">
+                    <div class="form-group">
+                      <label for="settingsName">Full Name</label>
+                      <input type="text" id="settingsName" class="form-control" value="Candidate" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="settingsEmail">Email Address</label>
+                      <input type="email" id="settingsEmail" class="form-control" value="candidate@example.com" required>
+                    </div>
+                  </div>
+
+                  <div class="form-grid-two">
+                    <div class="form-group">
+                      <label for="settingsTargetRole">Target Career Role</label>
+                      <input type="text" id="settingsTargetRole" class="form-control" value="Full Stack Software Engineer">
+                    </div>
+                    <div class="form-group">
+                      <label for="settingsUniversity">University / Batch</label>
+                      <input type="text" id="settingsUniversity" class="form-control" value="Class of 2026 - Computer Science">
+                    </div>
+                  </div>
+
+                  <div class="form-actions-right">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Profile
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Appearance & Theme Card -->
+            <div class="card settings-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title"><i class="fa-solid fa-palette"></i> Appearance & Interface</h3>
+                  <p class="card-subtitle">Customize color theme and readability</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="theme-selection-group">
+                  <label class="theme-choice-card" for="themeChoiceLight">
+                    <input type="radio" name="appThemeRadio" id="themeChoiceLight" value="light" checked>
+                    <div class="theme-box light-preview">
+                      <i class="fa-solid fa-sun"></i>
+                      <span>Warm White & Navy</span>
+                    </div>
+                  </label>
+                  <label class="theme-choice-card" for="themeChoiceDark">
+                    <input type="radio" name="appThemeRadio" id="themeChoiceDark" value="dark">
+                    <div class="theme-box dark-preview">
+                      <i class="fa-solid fa-moon"></i>
+                      <span>Dark Theme (Slate)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications & Reminder Card -->
+            <div class="card settings-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title"><i class="fa-solid fa-bell"></i> Notification Preferences</h3>
+                  <p class="card-subtitle">Control in-app alerts and reminders</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="preference-item">
+                  <div class="pref-text">
+                    <span class="pref-title">Interview Reminders</span>
+                    <span class="pref-desc">Show banner notifications 24 hours prior to scheduled interviews.</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="prefInterviewReminders" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="preference-item">
+                  <div class="pref-text">
+                    <span class="pref-title">Application Deadline Alerts</span>
+                    <span class="pref-desc">Highlight pending applications with deadlines approaching within 3 days.</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="prefDeadlineAlerts" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Management & Demo Records -->
+            <div class="card settings-card danger-zone-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title text-danger"><i class="fa-solid fa-database"></i> Data Management</h3>
+                  <p class="card-subtitle">Load sample records or wipe local storage</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="data-actions-row">
+                  <div>
+                    <h5 class="action-title">Reset Demo Records</h5>
+                    <p class="action-desc">Restore the original realistic placement demo records for testing and demonstration.</p>
+                  </div>
+                  <button class="btn btn-outline" id="loadDemoDataBtn">
+                    <i class="fa-solid fa-arrows-rotate"></i> Load Demo Data
+                  </button>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="data-actions-row">
+                  <div>
+                    <h5 class="action-title text-danger">Clear All Data</h5>
+                    <p class="action-desc">Permanently erase all applications, interviews, and personalized settings from your browser localStorage.</p>
+                  </div>
+                  <button class="btn btn-danger" id="clearAllDataBtn">
+                    <i class="fa-solid fa-trash-can"></i> Clear All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. Application Modal (Add / Edit) -->
+  <div class="modal-backdrop" id="appModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-briefcase modal-icon"></i>
+            <h3 class="modal-title" id="appModalTitle">Add New Application</h3>
+          </div>
+          <button class="btn-icon modal-close" id="closeAppModalBtn" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        
+        <form id="appForm" novalidate>
+          <input type="hidden" id="appId">
+          <div class="modal-body">
+            
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="appCompany" class="required">Company Name</label>
+                <input type="text" id="appCompany" class="form-control" placeholder="e.g. Google, Amazon, Microsoft" required>
+                <div class="form-error" id="errCompany">Company name is required.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="appRole" class="required">Job Role</label>
+                <input type="text" id="appRole" class="form-control" placeholder="e.g. Graduate Software Engineer" required>
+                <div class="form-error" id="errRole">Job role is required.</div>
+              </div>
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="appLocation" class="required">Location</label>
+                <input type="text" id="appLocation" class="form-control" placeholder="e.g. Bangalore, Remote, Hybrid" required>
+                <div class="form-error" id="errLocation">Location is required.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="appJobType" class="required">Job Type</label>
+                <select id="appJobType" class="form-select" required>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Internship">Internship</option>
+                  <option value="Part-time">Part-time</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="appDate" class="required">Application Date</label>
+                <input type="date" id="appDate" class="form-control" required>
+                <div class="form-error" id="errDate">Please provide a valid application date.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="appDeadline">Application Deadline</label>
+                <input type="date" id="appDeadline" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="appStatus" class="required">Application Status</label>
+                <select id="appStatus" class="form-select" required>
+                  <option value="Applied">Applied</option>
+                  <option value="Assessment">Assessment</option>
+                  <option value="Interview">Interview</option>
+                  <option value="Offer">Offer</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="appUrl">Job Posting URL</label>
+                <input type="url" id="appUrl" class="form-control" placeholder="https://careers.company.com/job/123">
+                <div class="form-error" id="errUrl">Please enter a valid web URL (e.g. https://...).</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="appNotes">Job Description & Personal Notes</label>
+              <textarea id="appNotes" class="form-control" rows="3" placeholder="Key skills needed (DSA, System Design), referral contact, or test syllabus..."></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" id="cancelAppBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveAppBtn">
+              <i class="fa-solid fa-check"></i> Save Application
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Interview Modal (Add / Edit) -->
+  <div class="modal-backdrop" id="interviewModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-user-tie modal-icon"></i>
+            <h3 class="modal-title" id="interviewModalTitle">Schedule Interview</h3>
+          </div>
+          <button class="btn-icon modal-close" id="closeInterviewModalBtn" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="interviewForm" novalidate>
+          <input type="hidden" id="interviewId">
+          <div class="modal-body">
+            
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="interviewCompany" class="required">Company Name</label>
+                <input type="text" id="interviewCompany" class="form-control" placeholder="e.g. Microsoft" required>
+                <div class="form-error" id="errIntCompany">Company name is required.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="interviewRole" class="required">Job Position</label>
+                <input type="text" id="interviewRole" class="form-control" placeholder="e.g. Frontend Engineer" required>
+                <div class="form-error" id="errIntRole">Job position is required.</div>
+              </div>
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="interviewDate" class="required">Interview Date</label>
+                <input type="date" id="interviewDate" class="form-control" required>
+                <div class="form-error" id="errIntDate">Date is required.</div>
+              </div>
+
+              <div class="form-group">
+                <label for="interviewTime" class="required">Interview Time</label>
+                <input type="time" id="interviewTime" class="form-control" required>
+                <div class="form-error" id="errIntTime">Time is required.</div>
+              </div>
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="interviewRound" class="required">Interview Round</label>
+                <select id="interviewRound" class="form-select" required>
+                  <option value="Online Coding Assessment">Online Coding Assessment</option>
+                  <option value="Technical Round 1">Technical Round 1 (DSA / Problem Solving)</option>
+                  <option value="Technical Round 2">Technical Round 2 (System Design / Core)</option>
+                  <option value="Hiring Manager / Team Fit">Hiring Manager / Team Fit</option>
+                  <option value="HR / Cultural Fit">HR / Cultural Fit</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="interviewMode" class="required">Interview Mode</label>
+                <select id="interviewMode" class="form-select" required>
+                  <option value="Online">Online (Google Meet / Zoom / Teams)</option>
+                  <option value="Offline">Offline (On-campus / Office)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="interviewLinkLocation">Meeting Link or Campus Location</label>
+              <input type="text" id="interviewLinkLocation" class="form-control" placeholder="e.g. https://meet.google.com/xyz or Placement Hall Room 204">
+            </div>
+
+            <div class="form-grid-two">
+              <div class="form-group">
+                <label for="interviewStatus">Status</label>
+                <select id="interviewStatus" class="form-select">
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="interviewNotes">Preparation Notes & Checkpoints</label>
+              <textarea id="interviewNotes" class="form-control" rows="3" placeholder="Topics to revise, interviewer background, project talking points..."></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" id="cancelInterviewBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveInterviewBtn">
+              <i class="fa-solid fa-check"></i> Save Interview
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Confirmation Dialog Modal (Delete) -->
+  <div class="modal-backdrop" id="confirmModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-triangle-exclamation modal-icon text-danger"></i>
+            <h3 class="modal-title" id="confirmModalTitle">Confirm Action</h3>
+          </div>
+          <button class="btn-icon modal-close" id="closeConfirmModalBtn" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="confirmModalMessage" class="confirm-message">Are you sure you want to delete this record? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="cancelConfirmBtn">Cancel</button>
+          <button type="button" class="btn btn-danger" id="acceptConfirmBtn">
+            <i class="fa-solid fa-trash-can"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Vanilla JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
