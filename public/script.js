@@ -188,7 +188,7 @@
       APPLICATIONS: 'careertrack_apps_v1',
       INTERVIEWS: 'careertrack_interviews_v1',
       PROFILE: 'careertrack_profile_v1',
-      THEME: 'careertrack_theme_v1',
+      THEME: 'careertrack_theme_v2',
       NOTIFS: 'careertrack_notifs_v1'
     },
 
@@ -246,7 +246,9 @@
     },
 
     getTheme() {
-      return localStorage.getItem(this.STORAGE_KEYS.THEME) || 'light';
+      const saved = localStorage.getItem(this.STORAGE_KEYS.THEME);
+      if (saved === 'dark' || saved === 'light') return saved;
+      return 'light';
     },
 
     saveTheme(theme) {
@@ -1497,7 +1499,7 @@
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.parentElement.getBoundingClientRect();
       const width = rect.width || 500;
-      const height = 220;
+      const height = 180;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -1620,7 +1622,7 @@
 
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
-      const size = 180;
+      const size = 160;
 
       canvas.width = size * dpr;
       canvas.height = size * dpr;
@@ -1649,8 +1651,8 @@
 
       const centerX = size / 2;
       const centerY = size / 2;
-      const outerRadius = 75;
-      const innerRadius = 48;
+      const outerRadius = 66;
+      const innerRadius = 42;
 
       let startAngle = -Math.PI / 2;
 
@@ -1682,12 +1684,12 @@
       ctx.textBaseline = 'middle';
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       ctx.fillStyle = isDark ? '#F1F5F9' : '#202B3C';
-      ctx.font = 'bold 22px sans-serif';
-      ctx.fillText(total, centerX, centerY - 6);
+      ctx.font = '600 18px sans-serif';
+      ctx.fillText(total, centerX, centerY - 5);
 
       ctx.fillStyle = isDark ? '#94A3B8' : '#697586';
-      ctx.font = '11px sans-serif';
-      ctx.fillText('Applications', centerX, centerY + 14);
+      ctx.font = '10.5px sans-serif';
+      ctx.fillText('Applications', centerX, centerY + 12);
 
       // Render Dynamic Legend
       legendEl.innerHTML = '';
@@ -1715,7 +1717,7 @@
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.parentElement.getBoundingClientRect();
       const width = rect.width || 800;
-      const height = 260;
+      const height = 200;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
